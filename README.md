@@ -3,7 +3,7 @@
 
 ## Overview
 
-The Issue Severity Calculator is a tool designed to assess the severity of software issues based on four key metrics: Likelihood, Impact, Complexity, and Exploitability. This calculator provides a quantitative measure that helps prioritize and address issues effectively.
+The Issue Severity Formula is a tool designed to assess the severity of software issues based on four key metrics: Likelihood, Impact, Complexity, and Exploitability. This calculator provides a quantitative measure that helps prioritize and address issues effectively.
 
 ## Metrics
 
