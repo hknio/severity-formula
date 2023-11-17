@@ -120,6 +120,10 @@ Use the following command in order to create a distribution graph:
 python3 formula.py -g
 ```
 
+## Changelog
+
+- [CHANGELOG.md](CHANGELOG.md)
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
