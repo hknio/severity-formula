@@ -82,9 +82,13 @@ $1.7 \geq Severity, Severity = Informational/GasOptimization$
 
 The issue severity calculator contains **two special conditions**.
 
-1. The first of these special conditions is when the likelihood metric or impact metric is determined as 1. In this case, the metric score given in the formula for the metric set to 1 will be set to 0 instead. Because if one of these metrics is 1, it will drastically reduce the severity.
+1. The first of these special conditions is when the likelihood metric is determined as 1. In this case, the metric score given in the formula for the metric set to 1 will be set to 0 instead. That means, the severity is highly dependent to the likelihood metric.
 
-2. The second condition is that both metrics are determined as 1. Since likelihood and impact metrics are the 2 most basic metrics in the formula, if both of these metrics are 1, the severity score will be directly returned as 0 as the finding will not pose any risk.
+2. The second condition is that the impact metric is determined as 1. It means, there is no impact at all and the finding should be classified as Informational.
+
+3. The third condition is for both likelihood and impact metrics are set to 1. Since likelihood and impact metrics are the 2 most basic metrics in the formula, if both of these metrics are 1, the severity score will be directly returned as 0 as the finding will not pose any risk.
+
+4. If score is lower than 1.0, taking its root can increase the score instead. For findings with a score lower than 1.0, taking the root of the score will be invalidated.
 
 ## Score Distribution
 A bar graph was created showing the score distributions as a result of the combinations of all possibilities.

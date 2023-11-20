@@ -1,6 +1,19 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+
+## [1.2] - 2023-11-20
+
+### Added
+- Two more special conditions were added programmatically to prevent false results.
+- The finding **can** be classified as `Low` when the impact metric is **5** and the likelihood metric is **1**.
+- The finding **cannot** be classified as `Low` when the impact metric is  **1** and the likelihood metric is **5**.
+
+### Changed
+- Severity distribution graph was replaced.
+
+### Fixed
+- Taking the square root slightly increased the severity for numbers less than 1. This problem has been fixed.
  
 ## [1.1] - 2023-11-07
  

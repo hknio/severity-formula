@@ -48,20 +48,35 @@ def calculate():
 
 
 def calculate_severity(likelihood, impact, exploitability, issue_complexity):
+    impact_penalty = 2
+
     exploitability_coeff = 1 + ((exploitability - 1) / exploitability)
 
-    if likelihood == 1:
+    if (
+        likelihood == 1
+    ):  # special condition #1: Likelihood 1, no penalty, score is highly dependent to impact, max score: 2.5
         likelihood = 0
 
-    if impact == 1:
+    if (
+        impact == 1
+    ):  # special condition #2: Impact 1, Likelihood [4 || 5], substract the impact_penalty from likelihood, max score: 1.5
         impact = 0
+        if likelihood > 3:
+            likelihood -= impact_penalty
 
     if (likelihood == 0) and (impact == 0):
+        # special condition #3: Impact 0, Likelihood 0, means no risk or possibility at all, max score: 0.0
         result = 0
+        return result
+
     else:
-        result = ((0.5 * likelihood) + (0.5 * impact) - (0.2 * issue_complexity)) ** (
-            1 / exploitability_coeff
-        )
+        pre_result = (0.5 * likelihood) + (0.5 * impact) - (0.2 * issue_complexity)
+
+        if pre_result >= 1:
+            result = pre_result ** (1 / exploitability_coeff)
+        else:  # special condition #4: if the score is lower than 1.0, multiplying it with pow(1.5) can increase its severity instead.
+            result = pre_result
+
     return result
 
 
