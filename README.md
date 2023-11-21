@@ -80,7 +80,7 @@ $1.7 \geq Severity, Severity = Informational/GasOptimization$
 
 ## Special Conditions
 
-The issue severity calculator contains **two special conditions**.
+The issue severity calculator contains **four special conditions**.
 
 1. The first of these special conditions is when the likelihood metric is determined as 1. In this case, the metric score given in the formula for the metric set to 1 will be set to 0 instead. That means, the severity is highly dependent to the likelihood metric.
 
