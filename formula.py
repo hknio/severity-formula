@@ -167,15 +167,35 @@ def create_graph(dataset):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-g",
+        "-G",
         "--graph",
-        help="creates a distribution graph for benchmarking purposes",
+        help="creates a distribution graph for benchmarking",
         action="store_true",
     )
+    parser.add_argument(
+        "-C",
+        "--calculate",
+        metavar="N",
+        type=int,
+        nargs="+",
+        help="calculate the severity via metrics in given order: likelihood, impact, exploitability, issue_complexity",
+    )
+
     args = parser.parse_args()
 
     if args.graph:
         dataset = generate_dataset()
         create_graph(dataset)
+    elif args.calculate:
+        severity = calculate_severity(
+            args.calculate[0], args.calculate[1], args.calculate[2], args.calculate[3]
+        )
+        label = generate_label(severity)
+        print(f"Likelihood [1-5]: {args.calculate[0]}")
+        print(f"Impact [1-5]: {args.calculate[0]}")
+        print(f"Exploitability [1-2]: {args.calculate[0]}")
+        print(f"Complexity [0-2]: {args.calculate[0]}")
+        print(f"Final Score: {severity} ({label})")
+
     else:
         calculate()

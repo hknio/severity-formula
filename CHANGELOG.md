@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.3] - 2023-12-14
+
+### Added 
+- A new argument was added to the code for faster input entry.
+
 ## [1.2] - 2023-11-20
 
 ### Added
