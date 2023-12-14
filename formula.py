@@ -192,9 +192,9 @@ if __name__ == "__main__":
         )
         label = generate_label(severity)
         print(f"Likelihood [1-5]: {args.calculate[0]}")
-        print(f"Impact [1-5]: {args.calculate[0]}")
-        print(f"Exploitability [1-2]: {args.calculate[0]}")
-        print(f"Complexity [0-2]: {args.calculate[0]}")
+        print(f"Impact [1-5]: {args.calculate[1]}")
+        print(f"Exploitability [1-2]: {args.calculate[2]}")
+        print(f"Complexity [0-2]: {args.calculate[3]}")
         print(f"Final Score: {severity} ({label})")
 
     else:
