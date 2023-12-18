@@ -33,7 +33,17 @@ The Issue Severity Formula is a tool designed to assess the severity of software
   - **High Impact**: Loss of huge amount of assets.
   - **Low Impact**: Minimal impact on functionality or data.
 
-### 3. Complexity
+### 3. Exploitability
+
+- **Description**: Indicates whether an issue can be directly exploited by an unprivileged user.
+- **Scale**:
+    1. **[1] Independent** - Exploit can be executed at any time, without requiring a state change from a privileged user.
+    2. **[2] Dependent** - The exploit depends on another call from the most privileged user.
+- **Example Scenarios**:
+  - **High Exploitability**: Only exploitable by protocol owner.
+  - **Low Exploitability**: Any protocol user can exploit the finding.
+
+### 4. Complexity
 
 - **Description**: Measures the level of difficulty in addressing and resolving the issue.
 - **Scale**:
@@ -44,16 +54,6 @@ The Issue Severity Formula is a tool designed to assess the severity of software
   - **High Complexity**: Requires significant time and resources to detect.
   - **Low Complexity**: Anyone can detect the finding in a short time.
 
-### 4. Exploitability
-
-- **Description**: Indicates whether an issue can be directly exploited by an unprivileged user.
-- **Scale**:
-    1. **[1] Independent** - Exploit can be executed at any time, without requiring a state change from a privileged user.
-    2. **[2] Dependent** - The exploit depends on another call from the most privileged user.
-- **Example Scenarios**:
-  - **High Exploitability**: Only exploitable by protocol owner.
-  - **Low Exploitability**: Any protocol user can exploit the finding.
- 
 ## Severities
 
 There are five distinct risk levels associated with issue severity:
