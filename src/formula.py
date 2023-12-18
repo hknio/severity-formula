@@ -1,3 +1,4 @@
+from format import Format
 from matplotlib import pyplot as plt
 import pandas as pd
 import seaborn as sns
@@ -18,33 +19,53 @@ def calculate():
         # Likelihood bounds between 1-5
         likelihood = int(input("Likelihood [1-5]: "))
         if likelihood not in range(1, 6):
-            raise ValueError
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Likelihood [1-5] != {likelihood}",
+            )
 
         # Impact bounds between 1-5
         impact = int(input("Impact [1-5]: "))
         if impact not in range(1, 6):
-            raise ValueError
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Impact [1-5] != {impact}",
+            )
 
         # Exploitability bounds between 1-2
-        exploitability = int(input("Exploitability [1, 2]: "))
+        exploitability = int(input("Exploitability [1,2]: "))
         if exploitability not in range(1, 3):
-            raise ValueError
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Exploitability [1,2] != {exploitability}",
+            )
 
         # IssueComplexity bounds between 0-2
         issue_complexity = int(input("Complexity [0-2]: "))
         if issue_complexity not in range(3):
-            raise ValueError
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Complexity [0-2] != {issue_complexity}",
+            )
 
-        severity = calculate_severity(
-            likelihood, impact, exploitability, issue_complexity
+        (
+            result,
+            likelihood,
+            impact,
+            exploitability,
+            issue_complexity,
+        ) = calculate_severity(likelihood, impact, exploitability, issue_complexity)
+
+        (label, issue_color) = generate_label(result)
+
+        print(
+            Format.format("Final Score: ", Format.BOLD)
+            + f"{result}"
+            + f" [{Format.format(label, issue_color)}]"
         )
 
-        label = generate_label(severity)
-
-        print(f"Final Score: {severity} ({label})")
-
     except ValueError:
-        print("Value Error!")
+        print(Format.format("[!] Value Error", Format.RED))
 
 
 def calculate_severity(likelihood, impact, exploitability, issue_complexity):
@@ -67,7 +88,7 @@ def calculate_severity(likelihood, impact, exploitability, issue_complexity):
     if (likelihood == 0) and (impact == 0):
         # special condition #3: Impact 0, Likelihood 0, means no risk or possibility at all, max score: 0.0
         result = 0
-        return result
+        return (result, likelihood, impact, exploitability, issue_complexity)
 
     else:
         pre_result = (0.5 * likelihood) + (0.5 * impact) - (0.2 * issue_complexity)
@@ -77,21 +98,26 @@ def calculate_severity(likelihood, impact, exploitability, issue_complexity):
         else:  # special condition #4: if the score is lower than 1.0, multiplying it with pow(1.5) can increase its severity instead.
             result = pre_result
 
-    return result
+    return (result, likelihood, impact, exploitability, issue_complexity)
 
 
 def generate_label(score):
     if float(score) <= 1.7:
-        label = "Informational"
+        label = "INFORMATIONAL"
+        issue_color = Format.COLOREND
     elif 1.7 < float(score) <= 2.5:
-        label = "Low"
+        label = "LOW"
+        issue_color = Format.GREEN
     elif 2.5 < float(score) <= 3.5:
-        label = "Medium"
+        label = "MEDIUM"
+        issue_color = Format.YELLOW
     elif 3.5 < float(score) <= 4.5:
-        label = "High"
+        label = "HIGH"
+        issue_color = Format.RED
     else:
-        label = "Critical"
-    return label
+        label = "CRITICAL"
+        issue_color = Format.PURPLE
+    return (label, issue_color)
 
 
 def generate_dataset():
@@ -99,18 +125,18 @@ def generate_dataset():
     data = {}
 
     (
-        data["Informational"],
-        data["Low"],
-        data["Medium"],
-        data["High"],
-        data["Critical"],
+        data["INFORMATIONAL"],
+        data["LOW"],
+        data["MEDIUM"],
+        data["HIGH"],
+        data["CRITICAL"],
     ) = ({}, {}, {}, {}, {})
 
     for likelihood in range(1, 6):
         for impact in range(1, 6):
             for exploitability in range(1, 3):
                 for complexity in range(3):
-                    result = calculate_severity(
+                    (result, _, _, _, _) = calculate_severity(
                         likelihood, impact, exploitability, complexity
                     )
                     result = "{:.2f}".format(result)
@@ -120,7 +146,7 @@ def generate_dataset():
                     else:
                         count_set[result] += 1
 
-                    label = generate_label(result)
+                    (label, _) = generate_label(result)
 
                     data[label][result] = count_set[result]
 
@@ -167,15 +193,70 @@ def create_graph(dataset):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-g",
+        "-G",
         "--graph",
-        help="creates a distribution graph for benchmarking purposes",
+        help="creates a distribution graph for benchmarking",
         action="store_true",
     )
+    parser.add_argument(
+        "-C",
+        "--calculate",
+        metavar="N",
+        type=int,
+        nargs="+",
+        help="calculate the severity via metrics in given order: likelihood, impact, exploitability, issue_complexity",
+    )
+
     args = parser.parse_args()
 
     if args.graph:
         dataset = generate_dataset()
         create_graph(dataset)
+    elif args.calculate:
+        if args.calculate[0] not in range(1, 6):
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Likelihood [1-5] != {args.calculate[0]}",
+            )
+        elif args.calculate[1] not in range(1, 6):
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Impact [1-5] != {args.calculate[1]}",
+            )
+        elif args.calculate[2] not in range(1, 3):
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Exploitability [1,2] != {args.calculate[2]}",
+            )
+        elif args.calculate[3] not in range(3):
+            print(
+                Format.format("[!] Value Error:", Format.RED),
+                f"Complexity [0-2] != {args.calculate[3]}",
+            )
+        else:
+            (
+                severity,
+                likelihood,
+                impact,
+                exploitability,
+                issue_complexity,
+            ) = calculate_severity(
+                args.calculate[0],
+                args.calculate[1],
+                args.calculate[2],
+                args.calculate[3],
+            )
+
+            (label, issue_color) = generate_label(severity)
+
+            Format.generate_issue_output(
+                label,
+                issue_color,
+                severity,
+                likelihood,
+                impact,
+                exploitability,
+                issue_complexity,
+            )
     else:
         calculate()
