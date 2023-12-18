@@ -119,9 +119,14 @@ Use the following command in order to calculate severity for a finding:
 python3 formula.py
 ```
 
+Alternative and faster version:
+```bash
+python3 formula.py -C 5 5 1 1
+```
+
 Use the following command in order to create a distribution graph:
 ```bash
-python3 formula.py -g
+python3 formula.py -G
 ```
 
 ## Changelog
