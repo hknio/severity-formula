@@ -103,19 +103,19 @@ def calculate_severity(likelihood, impact, exploitability, issue_complexity):
 
 def generate_label(score):
     if float(score) <= 1.7:
-        label = "INFORMATIONAL"
+        label = "Informational"
         issue_color = Format.COLOREND
     elif 1.7 < float(score) <= 2.5:
-        label = "LOW"
+        label = "Low"
         issue_color = Format.GREEN
     elif 2.5 < float(score) <= 3.5:
-        label = "MEDIUM"
+        label = "Medium"
         issue_color = Format.YELLOW
     elif 3.5 < float(score) <= 4.5:
-        label = "HIGH"
+        label = "High"
         issue_color = Format.RED
     else:
-        label = "CRITICAL"
+        label = "Critical"
         issue_color = Format.PURPLE
     return (label, issue_color)
 
@@ -125,11 +125,11 @@ def generate_dataset():
     data = {}
 
     (
-        data["INFORMATIONAL"],
-        data["LOW"],
-        data["MEDIUM"],
-        data["HIGH"],
-        data["CRITICAL"],
+        data["Informational"],
+        data["Low"],
+        data["Medium"],
+        data["High"],
+        data["Critical"],
     ) = ({}, {}, {}, {}, {})
 
     for likelihood in range(1, 6):

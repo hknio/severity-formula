@@ -51,8 +51,8 @@ class Format:
 
         text_label = (
             Format.format("Final Score: ", Format.BOLD)
-            + f"{severity}"
-            + f" [{Format.format(label, issue_color)}]"
+            + "{:.1f}".format(severity)
+            + f" ({Format.format(label, issue_color)})"
         )
 
         issue_elements.append(text_likelihood)

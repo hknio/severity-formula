@@ -2,6 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2024-1-15
+
+### Changed
+- Issue classification style was changed. (e.g CRITICAL -> Critical)
+- Precision in the final score was truncated to one decimal.
+
 ## [1.4] - 2023-12-18
 
 ### Added
