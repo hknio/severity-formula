@@ -59,6 +59,7 @@ class Format:
         text_version = (
             Format.format("Hacken Calculator Version: ", Format.BOLD)
             + f"{version}"
+        )
 
         issue_elements.append(text_likelihood)
         issue_elements.append(text_impact)
