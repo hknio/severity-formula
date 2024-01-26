@@ -12,17 +12,6 @@ All notable changes to this project will be documented in this file.
 - `Exploitability` coefficient formula was changed. 
 - The distribution graph was replaced.
 
-## [0.4] - 2023-12-18
-
-### Added
-- Formatting feature was added.
-
-### Changed
-- The order of items `Exploitability` and `Issue Complexity` in the **README.md** file has been changed.
-
-### Fixed
-- All functions use strict numbers for calculation now.
-
 ## [0.4.1] - 2024-1-15
 
 ### Changed
