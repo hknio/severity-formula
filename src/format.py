@@ -32,6 +32,7 @@ class Format:
         impact,
         exploitability,
         issue_complexity,
+        version
     ):
         issue_elements = []
 
@@ -42,7 +43,7 @@ class Format:
         text_impact = Format.format("Impact [1-5]: ", Format.BOLD) + f"{impact}"
 
         text_exploitability = (
-            Format.format("Exploitability [1-2]: ", Format.BOLD) + f"{exploitability}"
+            Format.format("Exploitability [0-2]: ", Format.BOLD) + f"{exploitability}"
         )
 
         text_issue_complexity = (
@@ -51,8 +52,13 @@ class Format:
 
         text_label = (
             Format.format("Final Score: ", Format.BOLD)
-            + f"{severity}"
-            + f" [{Format.format(label, issue_color)}]"
+            + "{:.1f}".format(severity)
+            + f" ({Format.format(label, issue_color)})"
+        )
+
+        text_version = (
+            Format.format("Hacken Calculator Version: ", Format.BOLD)
+            + f"{version}"
         )
 
         issue_elements.append(text_likelihood)
@@ -60,5 +66,6 @@ class Format:
         issue_elements.append(text_exploitability)
         issue_elements.append(text_issue_complexity)
         issue_elements.append(text_label)
+        issue_elements.append(text_version)
 
         [print(elem) for elem in issue_elements]
