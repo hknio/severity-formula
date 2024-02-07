@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.6] - 2024-2-7
+
+### Fixed
+- A visual bug was introduced by [Kaan](https://github.com/kcaglan-hacken) and [Niccolo](https://github.com/npozzolini-hacken). When the `Likelihood` and `Impact` metrics were entered as 1, these values appeared as zero in the output section as a result of the calculation. This problem has been fixed.
+
 ## [0.5] - 2024-1-26
 
 ### Added

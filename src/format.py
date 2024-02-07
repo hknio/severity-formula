@@ -36,6 +36,12 @@ class Format:
     ):
         issue_elements = []
 
+        if likelihood == 0: # special condition 1
+            likelihood = 1
+
+        if impact == 0: # special condition 1
+            impact = 1
+
         text_likelihood = (
             Format.format("Likelihood [1-5]: ", Format.BOLD) + f"{likelihood}"
         )

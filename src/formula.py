@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 import argparse
 
-# v0.5
+# v0.6
 # Max score: 5, Min score: 0
 
 # if Severity > 4.5, Critical
@@ -13,7 +13,7 @@ import argparse
 # if 2.5 >= Severity > 1.7, Low
 # if 1.7 >= Severity, Informational
 
-VERSION = 0.5
+VERSION = 0.6
 
 
 def calculate():
