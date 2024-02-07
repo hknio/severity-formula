@@ -37,8 +37,9 @@ The Issue Severity Formula is a tool designed to assess the severity of software
 
 - **Description**: Indicates whether an issue can be directly exploited by an unprivileged user.
 - **Scale**:
-    1. **[1] Independent** - Exploit can be executed at any time, without requiring a state change from a privileged user.
-    2. **[2] Dependent** - The exploit depends on another call from the most privileged user.
+    1. **[0] Independent** - The exploit can be executed at any time, without requiring a state change from any privileged user.
+    2. **[1] Semi-Dependent** - The exploit requires a user who has been verified or authenticated by the system through additional security measures such as KYC or compliance checks. While these users have more privileges than unprivileged users, they do not possess the full range of privileges available to the most privileged users.
+    3. **[2] Dependent** - The exploit depends on a call from the most privileged user on the system.
 - **Example Scenarios**:
   - **High Exploitability**: Only exploitable by protocol owner.
   - **Low Exploitability**: Any protocol user can exploit the finding.

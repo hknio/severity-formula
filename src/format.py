@@ -32,8 +32,15 @@ class Format:
         impact,
         exploitability,
         issue_complexity,
+        version
     ):
         issue_elements = []
+
+        if likelihood == 0: # special condition 1
+            likelihood = 1
+
+        if impact == 0: # special condition 1
+            impact = 1
 
         text_likelihood = (
             Format.format("Likelihood [1-5]: ", Format.BOLD) + f"{likelihood}"
@@ -42,7 +49,7 @@ class Format:
         text_impact = Format.format("Impact [1-5]: ", Format.BOLD) + f"{impact}"
 
         text_exploitability = (
-            Format.format("Exploitability [1-2]: ", Format.BOLD) + f"{exploitability}"
+            Format.format("Exploitability [0-2]: ", Format.BOLD) + f"{exploitability}"
         )
 
         text_issue_complexity = (
@@ -55,10 +62,16 @@ class Format:
             + f" ({Format.format(label, issue_color)})"
         )
 
+        text_version = (
+            Format.format("Hacken Calculator Version: ", Format.BOLD)
+            + f"{version}"
+        )
+
         issue_elements.append(text_likelihood)
         issue_elements.append(text_impact)
         issue_elements.append(text_exploitability)
         issue_elements.append(text_issue_complexity)
         issue_elements.append(text_label)
+        issue_elements.append(text_version)
 
         [print(elem) for elem in issue_elements]

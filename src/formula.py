@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 import argparse
 
-# v1.1
+# v0.6
 # Max score: 5, Min score: 0
 
 # if Severity > 4.5, Critical
@@ -12,6 +12,8 @@ import argparse
 # if 3.4 >= Severity > 2.5, Medium
 # if 2.5 >= Severity > 1.7, Low
 # if 1.7 >= Severity, Informational
+
+VERSION = 0.6
 
 
 def calculate():
@@ -70,8 +72,8 @@ def calculate():
 
 def calculate_severity(likelihood, impact, exploitability, issue_complexity):
     impact_penalty = 2
-
-    exploitability_coeff = 1 + ((exploitability - 1) / exploitability)
+    
+    exploitability_coeff = 1 + (exploitability * 0.25)
 
     if (
         likelihood == 1
@@ -134,7 +136,7 @@ def generate_dataset():
 
     for likelihood in range(1, 6):
         for impact in range(1, 6):
-            for exploitability in range(1, 3):
+            for exploitability in range(3):
                 for complexity in range(3):
                     (result, _, _, _, _) = calculate_severity(
                         likelihood, impact, exploitability, complexity
@@ -223,10 +225,10 @@ if __name__ == "__main__":
                 Format.format("[!] Value Error:", Format.RED),
                 f"Impact [1-5] != {args.calculate[1]}",
             )
-        elif args.calculate[2] not in range(1, 3):
+        elif args.calculate[2] not in range(0, 3):
             print(
                 Format.format("[!] Value Error:", Format.RED),
-                f"Exploitability [1,2] != {args.calculate[2]}",
+                f"Exploitability [0-2] != {args.calculate[2]}",
             )
         elif args.calculate[3] not in range(3):
             print(
@@ -257,6 +259,7 @@ if __name__ == "__main__":
                 impact,
                 exploitability,
                 issue_complexity,
+                VERSION
             )
     else:
         calculate()

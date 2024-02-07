@@ -2,13 +2,28 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [1.4.1] - 2024-1-15
+## [0.6] - 2024-2-7
+
+### Fixed
+- A visual bug was introduced by [Kaan](https://github.com/kcaglan-hacken) and [Niccolo](https://github.com/npozzolini-hacken). When the `Likelihood` and `Impact` metrics were entered as 1, these values appeared as zero in the output section as a result of the calculation. This problem has been fixed.
+
+## [0.5] - 2024-1-26
+
+### Added
+- Project version was added to calculator's output to prevent any conflicts.
+- **Half-Dependent** field was introduced for `Exploitability` metric.
+
+### Changed
+- `Exploitability` coefficient formula was changed. 
+- The distribution graph was replaced.
+
+## [0.4.1] - 2024-1-15
 
 ### Changed
 - Issue classification style was changed. (e.g CRITICAL -> Critical)
 - Precision in the final score was truncated to one decimal.
 
-## [1.4] - 2023-12-18
+## [0.4] - 2023-12-18
 
 ### Added
 - Formatting feature was added.
@@ -19,12 +34,12 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - All functions use strict numbers for calculation now.
 
-## [1.3] - 2023-12-14
+## [0.3] - 2023-12-14
 
 ### Added 
 - A new argument was added to the code for faster input entry.
 
-## [1.2] - 2023-11-20
+## [0.2] - 2023-11-20
 
 ### Added
 Two more special conditions were added programmatically to prevent false results:
@@ -37,7 +52,7 @@ Two more special conditions were added programmatically to prevent false results
 ### Fixed
 - Taking the square root slightly increased the severity for numbers less than 1. This problem has been fixed.
  
-## [1.1] - 2023-11-07
+## [0.1] - 2023-11-07
  
 ### Added
 - The `formula.py` script can be executed in two different modes:
