@@ -26,7 +26,7 @@ The Issue Severity Formula is a tool designed to assess the severity of software
 - **Scale**:
     1. **[1]** - No impact at all
     2. **[2]** - Insignificant impact (e.g., contract fails to deliver promised returns without value loss)
-    3. **[3]** - Recoverable impact on balances, yields, or protocol rewards; or recoverable impact on availability, integrity, and confidentiality (e.g., DoS on protocol contracts, easy recovery)
+    3. **[3]** - Minor or recoverable impact on balances, yields, or protocol rewards; or recoverable impact on availability, integrity, and confidentiality (e.g., DoS on protocol contracts, easy recovery)
     4. **[4]** - Significant and irrecoverable loss; or high impact on availability, integrity, and confidentiality (e.g., DoS on protocol contracts, no recovery possible)
     5. **[5]** - Catastrophic loss (e.g., >10% of Total Value Locked)
 - **Example Scenarios**:
