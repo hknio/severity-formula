@@ -13,3 +13,4 @@ pytz==2023.3.post1
 seaborn==0.13.0
 six==1.16.0
 tzdata==2023.3
+flask==3.0.3

@@ -2,6 +2,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.7] - 2024-4-15
+
+### Fixed
+- [A bug](https://github.com/hknio/severity-formula/issues/3) in the standart usage of the formula tool was spotted by [Viktor](https://github.com/vlavrenenko-hacken) is solved. The traditional usage is removed from the code.
+
+### Added
+- Web API integrated for severity calculations.
+
+### Changed
+- The `calculate()` function was removed during the code refactoring.
+
 ## [0.6] - 2024-2-7
 
 ### Fixed

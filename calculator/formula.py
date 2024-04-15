@@ -1,10 +1,14 @@
-from format import Format
 from matplotlib import pyplot as plt
 import pandas as pd
 import seaborn as sns
 import argparse
 
-# v0.6
+if __name__ == "__main__":
+    from format import Format
+else:
+    from calculator.format import Format
+
+# v0.7
 # Max score: 5, Min score: 0
 
 # if Severity > 4.5, Critical
@@ -13,61 +17,7 @@ import argparse
 # if 2.5 >= Severity > 1.7, Low
 # if 1.7 >= Severity, Informational
 
-VERSION = 0.6
-
-
-def calculate():
-    try:
-        # Likelihood bounds between 1-5
-        likelihood = int(input("Likelihood [1-5]: "))
-        if likelihood not in range(1, 6):
-            print(
-                Format.format("[!] Value Error:", Format.RED),
-                f"Likelihood [1-5] != {likelihood}",
-            )
-
-        # Impact bounds between 1-5
-        impact = int(input("Impact [1-5]: "))
-        if impact not in range(1, 6):
-            print(
-                Format.format("[!] Value Error:", Format.RED),
-                f"Impact [1-5] != {impact}",
-            )
-
-        # Exploitability bounds between 1-2
-        exploitability = int(input("Exploitability [1,2]: "))
-        if exploitability not in range(1, 3):
-            print(
-                Format.format("[!] Value Error:", Format.RED),
-                f"Exploitability [1,2] != {exploitability}",
-            )
-
-        # IssueComplexity bounds between 0-2
-        issue_complexity = int(input("Complexity [0-2]: "))
-        if issue_complexity not in range(3):
-            print(
-                Format.format("[!] Value Error:", Format.RED),
-                f"Complexity [0-2] != {issue_complexity}",
-            )
-
-        (
-            result,
-            likelihood,
-            impact,
-            exploitability,
-            issue_complexity,
-        ) = calculate_severity(likelihood, impact, exploitability, issue_complexity)
-
-        (label, issue_color) = generate_label(result)
-
-        print(
-            Format.format("Final Score: ", Format.BOLD)
-            + f"{result}"
-            + f" [{Format.format(label, issue_color)}]"
-        )
-
-    except ValueError:
-        print(Format.format("[!] Value Error", Format.RED))
+VERSION = 0.7
 
 
 def calculate_severity(likelihood, impact, exploitability, issue_complexity):
@@ -225,7 +175,7 @@ if __name__ == "__main__":
                 Format.format("[!] Value Error:", Format.RED),
                 f"Impact [1-5] != {args.calculate[1]}",
             )
-        elif args.calculate[2] not in range(0, 3):
+        elif args.calculate[2] not in range(3):
             print(
                 Format.format("[!] Value Error:", Format.RED),
                 f"Exploitability [0-2] != {args.calculate[2]}",
@@ -262,4 +212,4 @@ if __name__ == "__main__":
                 VERSION
             )
     else:
-        calculate()
+        print(Format.format("[!] Invalid use: (-C/--calculate is missing)", Format.RED))
