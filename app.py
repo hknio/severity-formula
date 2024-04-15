@@ -30,7 +30,7 @@ def calculate():
     (label, _) = generate_label(result)
     score = "{:.1f}".format(result)
     
-    data = {"score": score,  "severity": label}
+    data = {"score": score,  "severity": label, "version": VERSION}
     
     response = app.response_class(
         response=json.dumps(data),
