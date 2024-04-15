@@ -117,12 +117,12 @@ To use the Issue Severity Calculator, follow these steps:
 
 Use the following command in order to calculate severity for a finding:
 ```bash
-python3 formula.py -C 5 5 1 1
+python3 calculator/formula.py -C 5 5 1 1
 ```
 
 Use the following command in order to create a distribution graph:
 ```bash
-python3 formula.py -G
+python3 calculator/formula.py -G
 ```
 
 ## Changelog
