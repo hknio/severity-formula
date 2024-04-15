@@ -117,11 +117,6 @@ To use the Issue Severity Calculator, follow these steps:
 
 Use the following command in order to calculate severity for a finding:
 ```bash
-python3 formula.py
-```
-
-Alternative and faster version:
-```bash
 python3 formula.py -C 5 5 1 1
 ```
 
