@@ -1,0 +1,28 @@
+name: 'severity-formula: Build and Deploy to GKE (develop)'
+
+on:
+  push:
+    branches: [ci/cd]
+  workflow_dispatch:
+
+jobs:
+  build-publish-deploy:
+    runs-on: ubuntu
+    env:
+      SERVICE_NAME: severity-formula
+    steps:
+      - uses: actions/checkout@v2
+      # Build the Docker image
+      - name: Build and Push
+        run: |-
+          gcloud auth activate-service-account --key-file <(echo '${{ secrets.GCP_CREDENTIALS }}')
+          echo '${{ secrets.GCP_CREDENTIALS }}' | docker login -u _json_key --password-stdin ${{ vars.REGISTRY }}
+          docker build -f Dockerfile -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest .
+          docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest
+
+      # Deploy to the GKE
+      - name: Deploy
+        run: |-
+          gcloud container clusters get-credentials prod --region us-central1 --project hacken-internal-products
+          helm upgrade ${{ env.SERVICE_NAME }} ./helm -n audit-tools --force --install --wait --timeout 15m0s -f ./helm/prod.yaml --set image.repository=${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }} --set image.tag=${{ github.sha }} --debug
