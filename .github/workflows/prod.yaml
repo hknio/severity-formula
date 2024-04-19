@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-publish-deploy:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     env:
       SERVICE_NAME: severity-formula
     steps:
