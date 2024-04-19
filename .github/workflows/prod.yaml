@@ -1,4 +1,4 @@
-name: 'severity-formula: Build and Deploy to GKE (develop)'
+name: 'severity-formula: Build and Deploy to GKE'
 
 on:
   push:
