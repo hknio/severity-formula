@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-publish-deploy:
-    runs-on: self-hosted
+    runs-on: runner-w3
     env:
       SERVICE_NAME: severity-formula
     steps:
