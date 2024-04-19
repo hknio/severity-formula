@@ -2,7 +2,7 @@ name: 'severity-formula: Build and Deploy to GKE'
 
 on:
   push:
-    branches: [ci/cd]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
