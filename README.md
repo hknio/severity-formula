@@ -65,8 +65,9 @@ There are five distinct risk levels associated with issue severity:
 5. **Informational/Gas Optimization [I/G-n]**    
  
 ## Mathematical Expression
+$Exploitability_{Coeff} = 1 + (0.25 * Exploitability)$
 
-$Severity = \sqrt[Exploitability]{( (0.5 * Likelihood) + (0.5 * Impact) - (0.2 * Issue Complexity))}$ 
+$Severity = \sqrt[Exploitability_{Coeff}]{( (0.5 * Likelihood) + (0.5 * Impact) - (0.2 * Issue Complexity))}$ 
 
 $Severity > 4.5, Severity = Critical$
 
