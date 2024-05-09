@@ -32,8 +32,9 @@ def calculate():
         )
 
         (label, _) = generate_label(result)
-        result = round(result, 1)
-        data = {"result": result,  "severity": label, "version": VERSION}
+        score = round(result, 1)
+        data = {"result": convert_to_portal_format(label), "calculator_score": score,  "severity": label, "version": VERSION}
+        print(data)
     
         response = app.response_class(
             response=json.dumps(data),
@@ -48,3 +49,13 @@ def search_item_by_name(name, data):
         if item['Name'] == name:
             return item
     return None
+
+def convert_to_portal_format(severity):
+    final_results = dict()
+    final_results["Critical"] = 4
+    final_results["High"] = 3
+    final_results["Medium"] = 2
+    final_results["Low"] = 1
+    final_results["Informational"] = 0
+
+    return final_results[severity]
