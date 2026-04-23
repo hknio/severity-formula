@@ -42,11 +42,8 @@ service:
 
 ingress:
   enabled: true
-  className: "nginx"
-  annotations:
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/limit-connections: "50"
+  className: "traefik"
+  annotations: {}
   hosts:
     - host: calc.hacken.io
       paths:
