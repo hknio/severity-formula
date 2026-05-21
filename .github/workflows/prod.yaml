@@ -7,21 +7,33 @@ on:
 
 jobs:
   build-publish-deploy:
-    runs-on: runner-w3
+    runs-on: hacken-por
+    permissions:
+      contents: read
+      id-token: write
     env:
       SERVICE_NAME: severity-formula
     steps:
-      - uses: actions/checkout@v2
-      # Build the Docker image
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/17269480000/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-ci-oidc@hacken-internal-products.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ vars.REGISTRY }} --quiet
+
       - name: Build and Push
         run: |-
-          gcloud auth activate-service-account --key-file <(echo '${{ secrets.GCP_CREDENTIALS }}')
-          echo '${{ secrets.GCP_CREDENTIALS }}' | docker login -u _json_key --password-stdin ${{ vars.REGISTRY }}
           docker build -f Dockerfile -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest .
           docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest
 
-      # Deploy to the GKE
       - name: Deploy
         run: |-
           gcloud container clusters get-credentials prod --region us-central1 --project hacken-internal-products
