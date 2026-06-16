@@ -1,0 +1,23 @@
+name: Sync to haas-labs
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to haas-labs
+        run: |
+          git remote add haas-labs https://x-access-token:${{ secrets.HAAS_LABS_SYNC_TOKEN }}@github.com/haas-labs/${{ github.event.repository.name }}.git
+          git push haas-labs --all --force
+          git push haas-labs --tags --force
