@@ -42,7 +42,7 @@ service:
 
 ingress:
   enabled: true
-  className: "traefik"
+  className: "traefik-external"
   annotations: {}
   hosts:
     - host: calc.hacken.io

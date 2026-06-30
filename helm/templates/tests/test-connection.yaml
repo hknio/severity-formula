@@ -6,10 +6,17 @@ metadata:
     {{- include "severity-formula.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "severity-formula.fullname" . }}:{{ .Values.service.port }}']
+    - name: curl
+      image: curlimages/curl:8.8.0
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          curl -fsS \
+            -H 'Content-Type: application/json' \
+            --data '{"Likelihood":5,"Impact":5,"CustomFields":[{"Name":"Dropdown1","Value":"1"},{"Name":"Dropdown2","Value":"1"}]}' \
+            http://{{ include "severity-formula.fullname" . }}:{{ .Values.service.port }}/calculate \
+            | grep '"severity": "Critical"'
   restartPolicy: Never

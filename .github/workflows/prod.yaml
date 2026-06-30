@@ -13,28 +13,29 @@ jobs:
       id-token: write
     env:
       SERVICE_NAME: severity-formula
+      REGISTRY: europe-west3-docker.pkg.dev/hacken-por/hacken-por
     steps:
       - uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: 'projects/17269480000/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: 'github-ci-oidc@hacken-internal-products.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/921687900132/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-ci-oidc@hacken-por.iam.gserviceaccount.com'
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Configure Docker
-        run: gcloud auth configure-docker ${{ vars.REGISTRY }} --quiet
+        run: gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
 
       - name: Build and Push
         run: |-
-          docker build -f Dockerfile -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} -t ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest .
-          docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
-          docker push ${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }}:latest
+          docker build -f Dockerfile -t ${{ env.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} -t ${{ env.REGISTRY }}/${{ env.SERVICE_NAME }}:latest .
+          docker push ${{ env.REGISTRY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/${{ env.SERVICE_NAME }}:latest
 
       - name: Deploy
         run: |-
-          gcloud container clusters get-credentials prod --region us-central1 --project hacken-internal-products
-          helm upgrade ${{ env.SERVICE_NAME }} ./helm -n audit-tools --force --install --wait --timeout 15m0s -f ./helm/prod.yaml --set image.repository=${{ vars.REGISTRY }}/${{ env.SERVICE_NAME }} --set image.tag=${{ github.sha }} --debug
+          gcloud container clusters get-credentials por-prod --region europe-west3 --project hacken-por
+          helm upgrade ${{ env.SERVICE_NAME }} ./helm -n audit-tools --create-namespace --force --install --wait --timeout 15m0s -f ./helm/prod.yaml --set image.repository=${{ env.REGISTRY }}/${{ env.SERVICE_NAME }} --set image.tag=${{ github.sha }} --debug
